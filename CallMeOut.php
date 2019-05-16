@@ -33,7 +33,6 @@ if(!empty($request)){
                 }
 
                 $intNum = $request['CallIntNum'];
-                $extNum = 0;
                 $recordedfile = $request['FullFname'];
                 if ($intNum === null || $intNum === '')
                 {
@@ -44,21 +43,11 @@ if(!empty($request)){
                         $numArray = explode('-', $numString);
                         $lengthNumArray = count($numArray);
                         $intNum = $numArray[$lengthNumArray - 2];
-                        $extNum = $numArray[$lengthNumArray - 1];
                     }
                 }
 
                 $resultFromB24 = $helper->uploadRecordedFile($request['call_id'],$recordedfile,$intNum,$request['CallDuration'],$request['CallDisposition']); 
                 //логируем, что нам рассказал битрикс в ответ на наш реквест
-
-                if (!is_null($resultFromB24['error_description']) && strpos($resultFromB24['error_description'], 'Call is not found') !== false)
-                {
-                    $date = new \DateTime('-'.$request['CallDuration'].' seconds');
-                    $resultFromB24_2 = $helper->runInputCall2($intNum,$extNum,$date);
-                    $helper->writeToLog($resultFromB24_2,'sendcall2b24 register call');
-
-                    $resultFromB24 = $helper->uploadRecordedFile($request['call_id'],$recordedfile,$intNum,$request['CallDuration'],$request['CallDisposition']); 
-                } 
                 $helper->writeToLog($resultFromB24,'sendcall2b24 upload call status');
             break;
             default:
