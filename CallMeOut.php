@@ -31,7 +31,25 @@ if(!empty($request)){
                     $helper->writeToLog($resultFromB24,'sendcall2b24 error in params');
                     exit('error in params');
                 }
-                $resultFromB24 = $helper->uploadRecordedFile($request['call_id'],$request['FullFname'],$request['CallIntNum'],$request['CallDuration'],$request['CallDisposition']); 
+
+                $intNum = $request['CallIntNum'];
+                $recordedfile = $request['FullFname'];
+                if ($intNum === null || $intNum === '')
+                {
+                    $pos = strpos($recordedfile, '_');
+                    if($pos !== false)
+                    {
+                        $num = explode('_', $recordedfile);
+                        $pos = strpos($num[1], '-');
+                        if($pos !== false)
+                        {
+                            $num2 = explode('-', $num[1]);
+                            $intNum = $num2[1];
+                        }
+                    }
+                }
+                
+                $resultFromB24 = $helper->uploadRecordedFile($request['call_id'],$recordedfile,$intNum,$request['CallDuration'],$request['CallDisposition']); 
                 //логируем, что нам рассказал битрикс в ответ на наш реквест
                 $helper->writeToLog($resultFromB24,'sendcall2b24 upload call status');
             break;
