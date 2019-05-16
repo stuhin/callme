@@ -122,6 +122,25 @@ class HelperFuncs {
 	    }
     
 	}
+	
+	public function runInputCall2($exten,$callerid,$date){ 
+	    $result = $this->getBitrixApi(array(
+			'USER_PHONE_INNER' => $exten,
+			//'USER_ID' => $argv[1],	
+			'PHONE_NUMBER' => $callerid,
+			'TYPE' => 2,
+			'CALL_START_DATE' => $date,
+			'CRM_CREATE' => 1,
+			'SHOW' => 0,
+			), 'telephony.externalcall.register');
+	    $this->writeToLog($result, 'runInputCall result');
+	    if ($result){
+	        return $result['result']['CALL_ID'];
+	    } else {
+	        return false;
+	    }
+    
+	}
 
 	/**
 	 * Run Bitrix24 REST API method user.get.json return only online users array
