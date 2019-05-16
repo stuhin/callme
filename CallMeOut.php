@@ -53,7 +53,9 @@ if(!empty($request)){
 
                 if (!is_null($resultFromB24['error_description']) && strpos($resultFromB24['error_description'], 'Call is not found') !== false)
                 {
-                    $helper->runInputCall($intNum,$extNum);
+                    $resultFromB24_2 = $helper->runInputCall($intNum,$extNum);
+                    $helper->writeToLog($resultFromB24_2,'sendcall2b24 register call');
+
                     $resultFromB24 = $helper->uploadRecordedFile($request['call_id'],$recordedfile,$intNum,$request['CallDuration'],$request['CallDisposition']); 
                 } 
                 $helper->writeToLog($resultFromB24,'sendcall2b24 upload call status');
