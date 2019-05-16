@@ -40,10 +40,11 @@ if(!empty($request)){
                     $pos = strpos($recordedfile, '-');
                     if($pos !== false)
                     {
-                        $recordedfileArray = explode('-', $recordedfile);
-                        $lengthRecordedfileArray = count($recordedfileArray);
-                        $intNum = $recordedfileArray[$lengthRecordedfileArray - 2];
-                        $extNum = $recordedfileArray[$lengthRecordedfileArray - 1];
+                        $numString = str_replace('.mp3', '', $recordedfile);
+                        $numArray = explode('-', $numString);
+                        $lengthNumArray = count($numArray);
+                        $intNum = $numArray[$lengthNumArray - 2];
+                        $extNum = $numArray[$lengthNumArray - 1];
                     }
                 }
 
