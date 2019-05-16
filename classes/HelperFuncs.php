@@ -105,11 +105,12 @@ class HelperFuncs {
 	 * We need only CALL_ID
 	 */
 	public function runInputCall($exten,$callerid){ 
+		$typeCall = $this->getConfig('type_call');
 	    $result = $this->getBitrixApi(array(
 			'USER_PHONE_INNER' => $exten,
 			//'USER_ID' => $argv[1],	
 			'PHONE_NUMBER' => $callerid,
-			'TYPE' => 2,
+			'TYPE' => $typeCall,
 			'CALL_START_DATE' => date("Y-m-d H:i:s"),
 			'CRM_CREATE' => 1,
 			'SHOW' => 0,
